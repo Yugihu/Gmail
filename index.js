@@ -3,6 +3,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv')
 const sequelize = require('./db/dbconfig')
+const models = require('./db/dbmodels')
 
 //init
 const app = express()
@@ -28,4 +29,8 @@ async function checkDb() {
 }
 checkDb()
 
+async function trydb() {
+    console.log(await models.users.findAll({ where: { username: "bla" } }))
+}
+trydb()
 app.listen(1000, () => { console.log("server app and running on port 1000") })
