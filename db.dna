@@ -1,16 +1,17 @@
 --mails
 -------id
--------from -username(ref)
--------to   -username(ref)
--------text 
--------subject
--------status {draft,sent,opened}
+-------sender -username(ref)
+-------reciver   -username(ref)
+-------mailBody 
+-------mailSubject
+-------mailStatus {draft,sent,opened}
 -------sentTime
 -------openedTime
 
 --blockedList
 -------blocker -username(ref)
--------blocked  -username(ref)
+-------blocked -username(ref)
+-------blockedTime
 
 --users
 -------username
