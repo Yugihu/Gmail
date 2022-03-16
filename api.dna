@@ -1,0 +1,18 @@
+--auth
+---- POST   /login {username ,password}
+---- POST   /register {username , password, avatar}
+---- DELETE /logout 🔐 
+
+--mails
+---- GET  / 🔐              //get the inbox
+---- GET  /sent 🔐          //get the sent items
+---- POST /create {to,subject,text}🔐 
+---- PUT  /update {id,to,subject,text}🔐 
+---- PUT  /send   {id} 🔐 
+---- PUT  /opened {id} 🔐 
+
+--blocked
+---- GET    /  🔐              //return the blocked users
+---- POST   /:username 🔐      // block this user   
+---- GET    /spam/:username 🔐 //return if this user is spam (has more then 5 record in blockedList)
+---- DELETE /:username 🔐      //remove username from my blocked list

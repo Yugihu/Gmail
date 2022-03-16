@@ -1,0 +1,20 @@
+--mails
+-------id
+-------from -username(ref)
+-------to   -username(ref)
+-------text 
+-------subject
+-------status {draft,sent,opened}
+-------sentTime
+-------openedTime
+
+--blockedList
+-------blocker -username(ref)
+-------blocked  -username(ref)
+
+--users
+-------username
+-------password(hashed)
+-------avatar
+-------
+
