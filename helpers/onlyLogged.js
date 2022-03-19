@@ -8,7 +8,7 @@ module.exports.onlyLogged = function (req, res, next) {
             const dec = jwt.decode(req.cookies.sid)
             if (err.name == "TokenExpiredError") {
                 const refToken = await models.refreshtokens.findOne({ where: { username: dec.username } })
-                jwt.verify(refToken, "SomeOtherSecret", (err, decoded) => {
+                jwt.verify(refToken?.token, "SomeOtherSecret", (err, decoded) => {
                     //invalid both
                     if (err) {
                         return res.status(403).send({ err: 'you logged out, please log in again' })
@@ -25,7 +25,8 @@ module.exports.onlyLogged = function (req, res, next) {
             }
         } else {
             const refToken = await models.refreshtokens.findOne({ where: { username: decoded.username } })
-            jwt.verify(refToken, "SomeOtherSecret", (err, decoded) => {
+            
+            jwt.verify(refToken?.token, "SomeOtherSecret", (err, decoded) => {
                 //valid access token but invalid refresh e.g. fast logout
                 if (err) {
                     return res.status(403).send({ err: 'you logged out, please log in again' })

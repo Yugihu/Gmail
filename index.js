@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv')
 const sequelize = require('./db/dbconfig')
 const models = require('./db/dbmodels')
+const { everyone } = require('./helpers/everyone')
 
 //init
 const app = express()
@@ -14,7 +15,6 @@ dotenv.config()
 //process.env.ACCESS_TOKEN
 app.use(express.json())
 app.use(cookieParser())
-
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/blocked', require('./routes/blocked'))
 app.use('/api/mails', require('./routes/mails'))

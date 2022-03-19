@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const models = require('../db/dbmodels')
 const bcrypt = require('bcrypt')
-const { onlyLogged } = require('../helpers/onlyLogged')
+//const { onlyLogged } =  require('../helpers/onlyLogged')
 const router = require('express').Router()
 
 
@@ -54,7 +54,13 @@ router.post('/login', async (req, res) => {
     const refreshedToken = jwt.sign({ username }, "SomeOtherSecret", { expiresIn: '100d' })
 
     //save the refresh token in the vault
-    const refreshes = await models.refreshtokens.create({ username: username, token: refreshedToken })
+    const ExistRefresh = await models.refreshtokens.findOne({ where: { username: username } })
+    if (!ExistRefresh) {
+        const refreshes = await models.refreshtokens.create({ username: username, token: refreshedToken })
+    } else {
+        ExistRefresh.token = refreshedToken
+        ExistRefresh.save()
+    }
 
     //save the access token in the client cookie
     res.cookie("sid", accessToken, {
@@ -67,7 +73,7 @@ router.post('/login', async (req, res) => {
 })
 
 
-router.delete('/logout', onlyLogged, async (req, res) => {
+router.delete('/logout', async (req, res) => {
 
     await models.refreshtokens.destroy({
         where: {
