@@ -1,6 +1,6 @@
 --auth
----- POST   /login {username ,password}
----- POST   /register {username , password, avatar}
+---- POST   /register {username , password, avatar}🆗
+---- POST   /login {username ,password}🆗
 ---- DELETE /logout 🔐 
 
 --mails
