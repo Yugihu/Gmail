@@ -1,17 +1,18 @@
 const models = require('../db/dbmodels');
 const { everyone } = require('../helpers/everyone');
+const { onlyLogged } = require('../helpers/onlyLogged');
 
 const router = require('express').Router()
 
 //get list of blocked users for the logged user
-router.get('/', everyone, async (req, res) => {
+router.get('/', onlyLogged, async (req, res) => {
     const user = req.user.username
     const blocked = await models.blockedlist.findAll({attributes: ['blocked', 'blockedTime'],where:{blocker : user}})
     res.send(blocked)
 })
 
 // block this user  for the logged user
-router.post('/:username',everyone, async (req, res) => {
+router.post('/:username',onlyLogged, async (req, res) => {
     
     const user = req.user.username
     
@@ -57,7 +58,7 @@ router.post('/:username',everyone, async (req, res) => {
 })
 
 //return if this user is spam (has more then 5 record in blockedList)
-router.get('/spam/:username',everyone, async (req, res) => {
+router.get('/spam/:username',onlyLogged, async (req, res) => {
     const {username} = req.params
     
     if (!username)
@@ -86,7 +87,7 @@ router.get('/spam/:username',everyone, async (req, res) => {
 
 })
 // remove the username from blocked list of the logged user
-router.delete('/:username', async (req, res) => {
+router.delete('/:username',onlyLogged, async (req, res) => {
 
 })
 

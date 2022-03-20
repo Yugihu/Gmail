@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const models = require('../db/dbmodels')
 const bcrypt = require('bcrypt')
-//const { onlyLogged } =  require('../helpers/onlyLogged')
+const { onlyLogged } =  require('../helpers/onlyLogged')
 const router = require('express').Router()
 
 
@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
 })
 
 
-router.delete('/logout', async (req, res) => {
+router.delete('/logout',onlyLogged, async (req, res) => {
 
     await models.refreshtokens.destroy({
         where: {
